@@ -27,7 +27,7 @@ public class AppUser {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private String roles;
+    private Roles role;
     @NonNull
     private String email;
     @NonNull

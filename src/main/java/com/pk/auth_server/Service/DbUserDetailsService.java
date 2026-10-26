@@ -20,7 +20,7 @@ public class DbUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return User.withUsername(u.getUsername())
                 .password(u.getPassword())
-                .roles(u.getRoles().split(","))
+                .roles("USER")
                 .build();
     }
 }
