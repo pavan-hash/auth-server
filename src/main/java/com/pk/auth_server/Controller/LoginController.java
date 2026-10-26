@@ -29,17 +29,28 @@ public class LoginController {
        this.authManager = authManager;
    }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginRequest(@Validated @RequestBody LoginRequest request)
-    {
-        try {
-            Authentication user = authManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
 
-        catch(AuthenticationException ex)
-        {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    @PostMapping("/login")
+    public ResponseEntity<?> loginRequest(
+            @Validated @RequestBody LoginRequest request) {
+
+        System.out.println("LOGIN CONTROLLER REACHED");
+
+        try {
+            Authentication user = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.username(),
+                            request.password()
+                    )
+            );
+
+            return ResponseEntity.ok().build();
+
+        } catch (AuthenticationException ex) {
+            System.out.println("AUTHENTICATION FAILED: "
+                    + ex.getClass().getSimpleName());
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
