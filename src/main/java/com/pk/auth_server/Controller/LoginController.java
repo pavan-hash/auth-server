@@ -47,8 +47,10 @@ public class LoginController {
             return ResponseEntity.ok().build();
 
         } catch (AuthenticationException ex) {
-            System.out.println("AUTHENTICATION FAILED: "
-                    + ex.getClass().getSimpleName());
+            ex.printStackTrace(); // Temporary debugging only
+
+            System.out.println("Exception type: " + ex.getClass().getName());
+            System.out.println("Exception message: " + ex.getMessage());
 
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
