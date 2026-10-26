@@ -2,7 +2,9 @@ package com.pk.auth_server.Model;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "app_user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppUser {
 
     enum Roles
