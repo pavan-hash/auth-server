@@ -1,6 +1,7 @@
 package com.pk.auth_server.Controller;
 
 import com.pk.auth_server.Dto.LoginRequest;
+import com.pk.auth_server.JWT.JwtUtil;
 import com.pk.auth_server.Model.AppUser;
 import com.pk.auth_server.Repo.AppUserRepository;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,11 +24,14 @@ import java.util.Optional;
 public class LoginController {
 
     private AppUserRepository appUserrepo;
+    private JwtUtil jwtUtil;
 
-   AuthenticationManager authManager;
+   private final AuthenticationManager authManager;
 
-   public LoginController(AuthenticationManager authManager) {
+   public LoginController(AuthenticationManager authManager,JwtUtil jwtUtil,AppUserRepository appUserrepo) {
        this.authManager = authManager;
+       this.jwtUtil = jwtUtil;
+       this.appUserrepo = appUserrepo;
    }
 
 
@@ -43,8 +48,9 @@ public class LoginController {
                             request.password()
                     )
             );
+            String token = jwtUtil.generate(request.username());
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(Map.of("username",user.getName(),"token",token));
 
         } catch (AuthenticationException ex) {
             ex.printStackTrace(); // Temporary debugging only
